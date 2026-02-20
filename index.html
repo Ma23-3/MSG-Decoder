@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شفرة المخلص</title>
+
+<style>
+
+:root{
+--main:#480d19;
+--second:#c0aa8e;
+--third:#cbc0b7;
+--accent:#5d5b3f;
+}
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:var(--main);
+    color:var(--third);
+    text-align:center;
+}
+
+.container{
+    max-width:700px;
+    margin:40px auto;
+    background:var(--accent);
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 0 30px rgba(0,0,0,0.6);
+}
+
+.logo{
+    width:120px;
+    margin-bottom:15px;
+}
+
+h1{
+    color:var(--second);
+    margin-bottom:5px;
+}
+
+.subtitle{
+    color:var(--third);
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+textarea{
+    width:100%;
+    height:120px;
+    margin:10px 0;
+    padding:12px;
+    font-size:18px;
+    border-radius:10px;
+    border:none;
+    outline:none;
+    background:var(--second);
+    color:#000;
+}
+
+button{
+    padding:10px 18px;
+    margin:8px 5px;
+    font-size:15px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:var(--main);
+    color:var(--second);
+    border:2px solid var(--second);
+    transition:0.3s;
+}
+
+button:hover{
+    background:var(--second);
+    color:var(--main);
+}
+
+.copy-btn{
+    background:var(--second);
+    color:var(--main);
+    font-weight:bold;
+}
+
+.copy-btn:hover{
+    background:var(--third);
+}
+
+.footer{
+    margin-top:20px;
+    font-size:13px;
+    opacity:0.7;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<img src="logo.png" class="logo">
+
+<h1>شفرة المخلص</h1>
+<div class="subtitle">El-Mokhales Secret Code</div>
+
+<textarea id="inputText" placeholder="اكتب هنا..."></textarea>
+
+<br>
+
+<button onclick="translateToCoptic()">Arabic → Coptic</button>
+<button onclick="translateToArabic()">Coptic → Arabic</button>
+<button onclick="clearText()">Clear</button>
+
+<textarea id="outputText" placeholder="النتيجة..." readonly></textarea>
+
+<br>
+<button class="copy-btn" onclick="copyText()">Copy Result</button>
+
+<div class="footer">© 2026 شفرة المخلص</div>
+
+</div>
+
+<script>
+
+const arabicToCopticMap = {
+    "أ": "Ⲁ", "ا": "Ⲁ",
+    "ب": "Ⲃ","ت": "Ⲅ","ث": "Ⲇ","ج": "Ⲉ",
+    "ح": "Ⲋ","خ": "Ⲍ","د": "Ⲏ","ذ": "Ⲑ",
+    "ر": "Ⲓ","ز": "Ⲕ","س": "Ⲗ","ش": "Ⲙ",
+    "ص": "Ⲛ","ض": "Ⲝ","ط": "Ⲟ","ظ": "Ⲡ",
+    "ع": "Ⲣ","غ": "Ⲥ","ف": "Ⲧ","ق": "Ⲩ",
+    "ك": "Ⲫ","ل": "Ⲭ","م": "M","ن": "Ⲯ",
+    "ه": "Ⲱ","ة": "Ⲱ","و": "Ϣ",
+    "ي": "Ϥ","ى": "Ϥ",
+    "ئ": "Ϧ","ء": "Ϧ","ؤ": "Ϩ"
+};
+
+const copticToArabicMap = Object.fromEntries(
+    Object.entries(arabicToCopticMap).map(([k,v]) => [v,k])
+);
+
+function translateToCoptic(){
+    let input = document.getElementById("inputText").value;
+    let result = input.split("").map(c => arabicToCopticMap[c] || c).join("");
+    document.getElementById("outputText").value = result;
+}
+
+function translateToArabic(){
+    let input = document.getElementById("inputText").value;
+    let result = input.split("").map(c => copticToArabicMap[c] || c).join("");
+    document.getElementById("outputText").value = result;
+}
+
+function clearText(){
+    document.getElementById("inputText").value = "";
+    document.getElementById("outputText").value = "";
+}
+
+function copyText(){
+    let output = document.getElementById("outputText");
+    navigator.clipboard.writeText(output.value);
+    alert("تم النسخ ✅");
+}
+
+</script>
+
+</body>
+</html>
